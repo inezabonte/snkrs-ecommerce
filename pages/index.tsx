@@ -2,7 +2,8 @@ import Layout from "components/IndexLayout";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Image from "next/image";
-import { Spinner } from "@chakra-ui/react";
+import Link from "next/link";
+import LoadingComponent from "components/LoadingComponent";
 
 type productItem = {
 	createdAt: string;
@@ -12,20 +13,6 @@ type productItem = {
 	description: string;
 	id: string;
 };
-
-const LoadingComponent = () => (
-	<Layout>
-		<div className="flex justify-center">
-			<Spinner
-				thickness="5px"
-				speed="0.5s"
-				emptyColor="gray.200"
-				color="gray.500"
-				size="xl"
-			/>
-		</div>
-	</Layout>
-);
 
 export default function IndexPage() {
 	const {
@@ -51,7 +38,11 @@ export default function IndexPage() {
 				<div className="grid grid-cols-picture-grid gap-2 place-content-center">
 					{products.map((item: productItem) => (
 						<figure>
-							<Image width={264} height={297} src={item.imageUrl} />
+							<Link href={`/products/${item.id}`}>
+								<a>
+									<Image width={264} height={297} src={item.imageUrl} />
+								</a>
+							</Link>
 						</figure>
 					))}
 				</div>
