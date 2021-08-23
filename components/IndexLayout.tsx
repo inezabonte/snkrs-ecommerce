@@ -12,7 +12,7 @@ export default function IndexLayout({ children, title }: IndexLayoutProps) {
 	return (
 		<div className="space-y-4">
 			<Head>
-				<title>{title}</title>
+				<title>{title ? title : "Nike SNKRS"}</title>
 				<link rel="icon" href="https://www.nike.com/favicon.ico" />
 			</Head>
 			<TopHeader />
