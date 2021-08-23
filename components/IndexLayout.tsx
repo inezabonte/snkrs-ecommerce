@@ -5,7 +5,7 @@ import Head from "next/head";
 
 type IndexLayoutProps = {
 	children: React.ReactNode;
-	title: string;
+	title?: string;
 };
 
 export default function IndexLayout({ children, title }: IndexLayoutProps) {
