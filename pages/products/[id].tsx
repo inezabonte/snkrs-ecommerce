@@ -3,9 +3,14 @@ import axios from "axios";
 import Image from "next/image";
 import { getAllProducstIds } from "lib/products";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRadioGroup, Grid, FormControl } from "@chakra-ui/react";
+import { useRadioGroup, Grid } from "@chakra-ui/react";
 import RadioCard from "components/RadioCard";
 import { useState, FormEvent } from "react";
+import { ParsedUrlQuery } from "querystring";
+
+interface IParams extends ParsedUrlQuery {
+	id: string;
+}
 
 type ItemTypes = {
 	createdAt: string;
@@ -99,8 +104,9 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const { id } = params as IParams;
 	const { data } = await axios.get(
-		`https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products/${params.id}`
+		`https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products/${id}`
 	);
 
 	return {
