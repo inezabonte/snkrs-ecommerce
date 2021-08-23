@@ -33,7 +33,7 @@ export default function IndexPage() {
 	}
 
 	return (
-		<Layout>
+		<Layout title="Nike SNKRS">
 			<main className=" ">
 				<div className="grid grid-cols-picture-grid gap-2 place-content-center">
 					{products.map((item: productItem) => (

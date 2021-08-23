@@ -5,7 +5,7 @@ import { MdLocationOn } from "react-icons/md";
 
 export default function TopHeader() {
 	return (
-		<header className="flex justify-between text-gray-500 text-xs font-light mx-4 mt-2">
+		<header className="flex justify-between text-gray-500 text-xs  mx-4 mt-2">
 			<div>
 				<a href="https://www.nike.com/us/en" className="flex items-center">
 					<MdKeyboardArrowLeft className="h-6 w-6" />
