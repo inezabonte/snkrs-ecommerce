@@ -1,7 +1,7 @@
 import Layout from "components/IndexLayout";
 import axios from "axios";
 import Image from "next/image";
-import { getAllProducstIds } from "lib/products";
+import { getAllProducstIds, getSingleItem } from "lib/products";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRadioGroup, Grid } from "@chakra-ui/react";
 import RadioCard from "components/RadioCard";
@@ -62,7 +62,6 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(shoeSize);
 	};
 
 	return (
@@ -105,13 +104,11 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const { id } = params as IParams;
-	const { data } = await axios.get(
-		`https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products/${id}`
-	);
+	const productData = getSingleItem(id);
 
 	return {
 		props: {
-			productData: data,
+			productData,
 		},
 	};
 };

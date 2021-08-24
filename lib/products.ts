@@ -1,4 +1,5 @@
 import axios from "axios";
+import products from "data/shoes.json";
 
 type ProductTypes = {
 	createdAt: string;
@@ -14,15 +15,15 @@ type DataTypes = {
 };
 
 export const getAllProducstIds = async () => {
-	const { data }: DataTypes = await axios.get(
-		"https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products"
-	);
-
-	return data.map((item) => {
+	return products.map((item) => {
 		return {
 			params: {
 				id: item.id,
 			},
 		};
 	});
+};
+
+export const getSingleItem = (id: string) => {
+	return products.find((element) => element.id === id);
 };

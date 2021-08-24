@@ -20,9 +20,7 @@ export default function IndexPage() {
 		data: products,
 		error,
 	} = useQuery("products", () =>
-		axios
-			.get("https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products")
-			.then((res) => res.data)
+		axios.get("/api/getProducts").then((res) => res.data)
 	);
 
 	if (isLoading) {
@@ -37,7 +35,7 @@ export default function IndexPage() {
 			<main className=" ">
 				<div className="grid grid-cols-picture-grid gap-2 place-content-center">
 					{products.map((item: productItem) => (
-						<figure>
+						<figure key={item.id}>
 							<Link href={`/products/${item.id}`}>
 								<a>
 									<Image width={264} height={297} src={item.imageUrl} />
