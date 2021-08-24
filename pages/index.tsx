@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import LoadingComponent from "components/LoadingComponent";
+import Header from "components/Header";
 
 type productItem = {
 	createdAt: string;
@@ -31,8 +32,8 @@ export default function IndexPage() {
 	}
 
 	return (
-		<Layout title="Nike SNKRS">
-			<main className=" ">
+		<Layout>
+			<main className="min-h-screen">
 				<div className="grid grid-cols-picture-grid gap-2 place-content-center">
 					{products.map((item: productItem) => (
 						<figure key={item.id}>
