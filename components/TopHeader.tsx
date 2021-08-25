@@ -17,8 +17,7 @@ import CartComponent from "./CartComponent";
 export default function TopHeader() {
 	return (
 		<header>
-			<div></div>
-			<div className="hidden lg:flex  justify-between text-gray-500 text-xs  mx-4 mt-2">
+			<div className="hidden lg:flex  justify-between text-gray-500 text-xs  m-2">
 				<div>
 					<a href="https://www.nike.com/us/en" className="flex items-center">
 						<MdKeyboardArrowLeft className="h-6 w-6" />
