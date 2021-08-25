@@ -20,6 +20,7 @@ type ItemTypes = {
 	description: string;
 	id: string;
 	shoeSize?: string;
+	quantity?: string;
 };
 
 type ItemPagetypes = {
@@ -64,7 +65,7 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 	const handleClick = async () => {
 		const items: string | null = localStorage.getItem("cart");
 
-		const addedItem = { ...productData, shoeSize };
+		const addedItem = { ...productData, shoeSize, quantity: "1" };
 
 		if (items != null) {
 			const parsedDadata: ItemTypes[] = JSON.parse(items);

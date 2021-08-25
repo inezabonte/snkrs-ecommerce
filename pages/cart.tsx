@@ -12,16 +12,17 @@ type cartTypes = {
 	description: string;
 	id: string;
 	shoeSize: string;
-}[];
+	quantity: string;
+};
 
 export default function CartPage() {
-	const [cart, setCart] = useState<cartTypes>([]);
+	const [cart, setCart] = useState<cartTypes[]>([]);
 	const [total, setTotal] = useState(0);
 	useEffect(() => {
 		const items: string | null = localStorage.getItem("cart");
 
 		if (items != null) {
-			const parsedData: cartTypes = JSON.parse(items);
+			const parsedData: cartTypes[] = JSON.parse(items);
 			setCart((currentValue) => [...currentValue, ...parsedData]);
 
 			parsedData.forEach((element) => {
@@ -47,6 +48,16 @@ export default function CartPage() {
 		"M 12.5 / W 14",
 	];
 
+	const quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+	const removeItem = (id: string, quantity: string, price: string) => {
+		const removedAmount = parseInt(quantity) * parseInt(price);
+		setTotal(total - removedAmount);
+		const updatedCart = cart.filter((item) => item.id != id);
+		localStorage.setItem("cart", JSON.stringify(updatedCart));
+		setCart(updatedCart);
+	};
+
 	return (
 		<Layout>
 			<Header title="Nike Store. Cart." />
@@ -60,8 +71,8 @@ export default function CartPage() {
 							</span>
 						</div>
 						<div>
-							{cart.map((item) => (
-								<div className="flex space-x-4">
+							{cart.map((item, index) => (
+								<div className="flex space-x-4" key={item.id}>
 									<div>
 										<Image src={item.imageUrl} width={150} height={150} />
 									</div>
@@ -82,25 +93,38 @@ export default function CartPage() {
 														variant="unstyled"
 													>
 														{options.map((option) => (
-															<option value={option}>{option}</option>
+															<option value={option} key={option}>
+																{option}
+															</option>
 														))}
 													</Select>
 												</div>
 												<div className="flex space-x-2">
 													<span>Quantity</span>
-													<Select placeholder="1" variant="unstyled">
-														<option>1</option>
-														<option>2</option>
-														<option>3</option>
-														<option>4</option>
-														<option>5</option>
-														<option>6</option>
-														<option>7</option>
-														<option>8</option>
-														<option>9</option>
-														<option>10</option>
+													<Select
+														placeholder={item.quantity}
+														variant="unstyled"
+													>
+														{quantity.map((option) => (
+															<option value={option} key={option}>
+																{option}
+															</option>
+														))}
 													</Select>
 												</div>
+											</div>
+											<div className="space-x-4">
+												<button className="border-b border-gray-600">
+													Move to favorites
+												</button>
+												<button
+													className="border-b border-gray-600"
+													onClick={() =>
+														removeItem(item.id, item.quantity, item.price)
+													}
+												>
+													Remove
+												</button>
 											</div>
 										</div>
 									</div>

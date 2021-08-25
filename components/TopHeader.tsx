@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { RiShoppingCart2Fill } from "react-icons/ri";
+import { GrMenu } from "react-icons/gr";
 import { MdLocationOn } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 import nikeLogo from "public/images/snkrs.svg";
+import {
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
+	IconButton,
+} from "@chakra-ui/react";
+import CartComponent from "components/CartComponent";
 
 type cartTypes = {
 	createdAt: string;
@@ -17,19 +25,10 @@ type cartTypes = {
 }[];
 
 export default function TopHeader() {
-	const [cartTotal, setCartTotal] = useState(0);
-	useEffect(() => {
-		const items: string | null = localStorage.getItem("cart");
-
-		if (items != null) {
-			const parsedDadata: cartTypes = JSON.parse(items);
-			setCartTotal(parsedDadata.length);
-		}
-	}, []);
-
 	return (
 		<header>
-			<div className="flex justify-between text-gray-500 text-xs  mx-4 mt-2">
+			<div></div>
+			<div className="hidden lg:flex  justify-between text-gray-500 text-xs  mx-4 mt-2">
 				<div>
 					<a href="https://www.nike.com/us/en" className="flex items-center">
 						<MdKeyboardArrowLeft className="h-6 w-6" />
@@ -39,25 +38,14 @@ export default function TopHeader() {
 				<div className="space-x-6 flex items-center">
 					<a>Join / Log in</a>
 					<a>Help</a>
-					<Link href="/cart">
-						<a className="relative">
-							{cartTotal > 0 ? (
-								<span className="absolute -top-2 -right-2 bg-red-500 text-white font-medium rounded-full w-4 h-4 text-center">
-									{cartTotal}
-								</span>
-							) : (
-								""
-							)}
-							<RiShoppingCart2Fill className="h-4 w-4" />
-						</a>
-					</Link>
+					<CartComponent />
 					<a className="flex items-center">
 						<MdLocationOn className="h-4 w-4" />
 						<span>United States</span>
 					</a>
 				</div>
 			</div>
-			<div className="flex justify-between items-center py-2 px-4 border-b border-t">
+			<div className="grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-1 gap-y-6 items-center py-2 px-4 border-b border-t">
 				<div>
 					<Link href="/">
 						<a>
@@ -65,12 +53,24 @@ export default function TopHeader() {
 						</a>
 					</Link>
 				</div>
-				<div className="space-x-8 font-medium">
+				<div className="justify-self-end lg:hidden ">
+					<div className="flex items-center space-x-4">
+						<CartComponent />
+						<Menu>
+							<MenuButton as={IconButton} icon={<GrMenu />} variant="outline" />
+							<MenuList>
+								<MenuItem>Join / Log in</MenuItem>
+								<MenuItem>Visit Nike.com</MenuItem>
+								<MenuItem>Help</MenuItem>
+							</MenuList>
+						</Menu>
+					</div>
+				</div>
+				<div className="space-x-8 font-medium col-span-2 lg:col-span-1 justify-self-center">
 					<a href="">Feed</a>
 					<a href="">In Stock</a>
 					<a href="">Upcoming</a>
 				</div>
-				<div></div>
 			</div>
 		</header>
 	);
