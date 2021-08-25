@@ -14,16 +14,6 @@ import {
 } from "@chakra-ui/react";
 import CartComponent from "components/CartComponent";
 
-type cartTypes = {
-	createdAt: string;
-	name: string;
-	imageUrl: string;
-	price: string;
-	description: string;
-	id: string;
-	shoeSize: string;
-}[];
-
 export default function TopHeader() {
 	return (
 		<header>
@@ -67,9 +57,15 @@ export default function TopHeader() {
 					</div>
 				</div>
 				<div className="space-x-8 font-medium col-span-2 lg:col-span-1 justify-self-center">
-					<a href="">Feed</a>
-					<a href="">In Stock</a>
-					<a href="">Upcoming</a>
+					<Link href="/">
+						<a>Feed</a>
+					</Link>
+					<Link href="/">
+						<a>In Stock</a>
+					</Link>
+					<Link href="/">
+						<a>Upcoming</a>
+					</Link>
 				</div>
 			</div>
 		</header>

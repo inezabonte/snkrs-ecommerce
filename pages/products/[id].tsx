@@ -4,9 +4,10 @@ import { getAllProducstIds, getSingleItem } from "lib/products";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRadioGroup, Grid } from "@chakra-ui/react";
 import RadioCard from "components/RadioCard";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ParsedUrlQuery } from "querystring";
 import Header from "components/Header";
+import { CartDataContext } from "lib/CartDataProvider";
 
 interface IParams extends ParsedUrlQuery {
 	id: string;
@@ -38,6 +39,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export default function ItemPage({ productData }: ItemPagetypes) {
 	const [shoeSize, setShoeSize] = useState("");
+	const [cartQuantity, setCartQuantity] = useContext(CartDataContext);
+
 	const options = [
 		"M 6 / W 7.5",
 		"M 6.5 / W 8",
@@ -71,8 +74,10 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 			const parsedDadata: ItemTypes[] = JSON.parse(items);
 			const updatedCart = [...parsedDadata, addedItem];
 			localStorage.setItem("cart", JSON.stringify(updatedCart));
+			setCartQuantity(cartQuantity + 1);
 		} else {
 			localStorage.setItem("cart", JSON.stringify([addedItem]));
+			setCartQuantity(cartQuantity + 1);
 		}
 	};
 
