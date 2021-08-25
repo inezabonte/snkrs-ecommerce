@@ -1,5 +1,5 @@
 import Layout from "@/components/IndexLayout";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, FormEvent } from "react";
 import Image from "next/image";
 import { Select } from "@chakra-ui/react";
 import Header from "@/components/Header";
@@ -29,7 +29,10 @@ export default function CartPage() {
 			setCart((currentValue) => [...currentValue, ...parsedData]);
 
 			parsedData.forEach((element) => {
-				setTotal((currentValue) => currentValue + parseInt(element.price));
+				setTotal(
+					(currentValue) =>
+						currentValue + parseInt(element.price) * parseInt(element.quantity)
+				);
 			});
 		}
 	}, []);
@@ -60,6 +63,32 @@ export default function CartPage() {
 		localStorage.setItem("cart", JSON.stringify(updatedCart));
 		setCart(updatedCart);
 		setCartQuantity(cartQuantity - 1);
+	};
+
+	const handleUpdateSize = (e: FormEvent<HTMLSelectElement>, index: number) => {
+		const { value } = e.currentTarget;
+		const copy = cart.slice();
+		copy[index].shoeSize = value;
+		localStorage.setItem("cart", JSON.stringify(copy));
+		setCart(copy);
+	};
+
+	const handleQuantityChange = (
+		e: FormEvent<HTMLSelectElement>,
+		index: number
+	) => {
+		const { value } = e.currentTarget;
+		const copy = cart.slice();
+		copy[index].quantity = value;
+		localStorage.setItem("cart", JSON.stringify(copy));
+		setCart(copy);
+		setTotal(0);
+		cart.forEach((element) => {
+			setTotal(
+				(currentValue) =>
+					currentValue + parseInt(element.price) * parseInt(element.quantity)
+			);
+		});
 	};
 
 	return (
@@ -97,6 +126,7 @@ export default function CartPage() {
 													<Select
 														placeholder={item.shoeSize}
 														variant="unstyled"
+														onChange={(e) => handleUpdateSize(e, index)}
 													>
 														{options.map((option) => (
 															<option value={option} key={option}>
@@ -110,6 +140,7 @@ export default function CartPage() {
 													<Select
 														placeholder={item.quantity}
 														variant="unstyled"
+														onChange={(e) => handleQuantityChange(e, index)}
 													>
 														{quantity.map((option) => (
 															<option value={option} key={option}>
@@ -161,7 +192,7 @@ export default function CartPage() {
 							<span className="font-bold">${total.toFixed(2)}</span>
 						</div>
 						<div className="flex flex-col  space-y-4">
-							<button className="bg-gray-200 rounded-full py-4 font-bold hover:bg-black hover:text-white">
+							<button className=" rounded-full py-4 font-bold bg-black text-white">
 								Checkout
 							</button>
 							<button className="bg-gray-200 rounded-full py-4">PayPal</button>

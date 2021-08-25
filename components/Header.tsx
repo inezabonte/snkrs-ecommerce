@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-export default function Header({ title }: { title: string }) {
+export default function Header({ title }: { title?: string }) {
 	return (
 		<Head>
 			<title>{title ? title : "Nike SNKRS"}</title>

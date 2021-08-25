@@ -1,18 +1,10 @@
-import Layout from "./IndexLayout";
-import { Spinner } from "@chakra-ui/react";
+import nikeLogo from "public/images/snkrs.svg";
+import Image from "next/image";
 
 export default function LoadingComponent() {
 	return (
-		<Layout>
-			<div className="flex justify-center min-h-screen">
-				<Spinner
-					thickness="5px"
-					speed="0.5s"
-					emptyColor="gray.200"
-					color="gray.500"
-					size="xl"
-				/>
-			</div>
-		</Layout>
+		<div className="flex justify-center items-center min-h-screen">
+			<Image src={nikeLogo} width={120} height={100} />
+		</div>
 	);
 }
