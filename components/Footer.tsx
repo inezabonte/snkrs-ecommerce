@@ -6,8 +6,8 @@ export default function Footer() {
 	return (
 		<footer className="bg-black mt-auto p-8">
 			<div>
-				<div className="flex justify-evenly">
-					<div className="flex  text-xs ">
+				<div className="grid grid-cols-2 justify-items-center">
+					<div className="grid lg:grid-cols-3 gap-8  text-xs ">
 						<div className="text-white flex flex-col font-bold space-y-2">
 							<a href="https://www.nike.com/gift-cards">GIFT CARDS</a>
 							<a href="">PROMOTIONS</a>
@@ -43,18 +43,18 @@ export default function Footer() {
 							</div>
 						</div>
 					</div>
-					<div className="flex text-white">
+					<div className="flex text-gray-400 space-x-2">
 						<a href="#">
-							<AiFillTwitterCircle />
+							<AiFillTwitterCircle className="text-4xl" />
 						</a>
 						<a href="">
-							<FaFacebook />
+							<FaFacebook className="text-4xl" />
 						</a>
 						<a href="">
-							<AiFillYoutube />
+							<AiFillYoutube className="text-4xl" />
 						</a>
 						<a href="">
-							<RiInstagramFill />
+							<RiInstagramFill className="text-4xl" />
 						</a>
 					</div>
 				</div>
