@@ -4,7 +4,7 @@ import { Spinner } from "@chakra-ui/react";
 export default function LoadingComponent() {
 	return (
 		<Layout>
-			<div className="flex justify-center">
+			<div className="flex justify-center min-h-screen">
 				<Spinner
 					thickness="5px"
 					speed="0.5s"

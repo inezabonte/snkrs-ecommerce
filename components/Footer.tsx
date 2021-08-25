@@ -4,7 +4,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 export default function Footer() {
 	return (
-		<footer className="bg-black mt-auto p-8">
+		<footer className="bg-black  p-8">
 			<div>
 				<div className="grid grid-cols-2 justify-items-center">
 					<div className="grid lg:grid-cols-3 gap-8  text-xs ">

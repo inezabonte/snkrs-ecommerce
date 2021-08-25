@@ -1,8 +1,9 @@
-import Layout from "components/IndexLayout";
-import { useEffect, useState } from "react";
+import Layout from "@/components/IndexLayout";
+import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import { Select } from "@chakra-ui/react";
-import Header from "components/Header";
+import Header from "@/components/Header";
+import { CartDataContext } from "lib/CartDataProvider";
 
 type cartTypes = {
 	createdAt: string;
@@ -18,6 +19,8 @@ type cartTypes = {
 export default function CartPage() {
 	const [cart, setCart] = useState<cartTypes[]>([]);
 	const [total, setTotal] = useState(0);
+	const [cartQuantity, setCartQuantity] = useContext(CartDataContext);
+
 	useEffect(() => {
 		const items: string | null = localStorage.getItem("cart");
 
@@ -56,6 +59,7 @@ export default function CartPage() {
 		const updatedCart = cart.filter((item) => item.id != id);
 		localStorage.setItem("cart", JSON.stringify(updatedCart));
 		setCart(updatedCart);
+		setCartQuantity(cartQuantity - 1);
 	};
 
 	return (
@@ -79,7 +83,9 @@ export default function CartPage() {
 									<div className="w-full">
 										<div className="flex justify-between">
 											<span className="font-medium">{item.name}</span>
-											<span>${item.price}</span>
+											<span>
+												${parseInt(item.price) * parseInt(item.quantity)}
+											</span>
 										</div>
 										<div className="text-gray-500">
 											<div>
