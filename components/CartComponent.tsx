@@ -34,6 +34,7 @@ export default function CartComponent() {
 				) : (
 					""
 				)}
+				<span className="sr-only">Cart {cartQuantity} items </span>
 				<RiShoppingCart2Fill className="h-4 w-4" />
 			</a>
 		</Link>

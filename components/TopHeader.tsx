@@ -12,7 +12,7 @@ import {
 	MenuItem,
 	IconButton,
 } from "@chakra-ui/react";
-import CartComponent from "components/CartComponent";
+import CartComponent from "./CartComponent";
 
 export default function TopHeader() {
 	return (

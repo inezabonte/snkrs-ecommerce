@@ -1,8 +1,8 @@
-import Layout from "components/IndexLayout";
+import Layout from "@/components/IndexLayout";
 import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import { Select } from "@chakra-ui/react";
-import Header from "components/Header";
+import Header from "@/components/Header";
 import { CartDataContext } from "lib/CartDataProvider";
 
 type cartTypes = {
@@ -83,7 +83,9 @@ export default function CartPage() {
 									<div className="w-full">
 										<div className="flex justify-between">
 											<span className="font-medium">{item.name}</span>
-											<span>${item.price}</span>
+											<span>
+												${parseInt(item.price) * parseInt(item.quantity)}
+											</span>
 										</div>
 										<div className="text-gray-500">
 											<div>

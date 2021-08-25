@@ -1,10 +1,9 @@
-import Layout from "components/IndexLayout";
+import Layout from "@/components/IndexLayout";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import LoadingComponent from "components/LoadingComponent";
-import Header from "components/Header";
+import LoadingComponent from "@/components/LoadingComponent";
 
 type productItem = {
 	createdAt: string;
@@ -33,19 +32,22 @@ export default function IndexPage() {
 
 	return (
 		<Layout>
-			<main className="min-h-screen">
-				<div className="grid grid-cols-picture-grid gap-2 place-content-center">
-					{products.map((item: productItem) => (
-						<figure key={item.id}>
-							<Link href={`/products/${item.id}`}>
-								<a>
-									<Image width={264} height={297} src={item.imageUrl} />
-								</a>
-							</Link>
-						</figure>
-					))}
-				</div>
-			</main>
+			<div className="grid grid-cols-picture-grid gap-2 place-content-center">
+				{products.map((item: productItem) => (
+					<figure key={item.id}>
+						<Link href={`/products/${item.id}`}>
+							<a>
+								<Image
+									width={264}
+									height={297}
+									src={item.imageUrl}
+									alt={item.name}
+								/>
+							</a>
+						</Link>
+					</figure>
+				))}
+			</div>
 		</Layout>
 	);
 }
