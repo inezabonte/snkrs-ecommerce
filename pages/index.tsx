@@ -25,7 +25,7 @@ export default function IndexPage() {
 		return data;
 	};
 
-	const { isLoading, data, error, isPreviousData, isFetching } = useQuery(
+	const { isLoading, data, error, isPreviousData } = useQuery(
 		["products", page],
 		() => getAllProducts(page),
 		{ keepPreviousData: true }
@@ -68,17 +68,17 @@ export default function IndexPage() {
 				</div>
 				<div className="flex justify-center items-center space-x-4">
 					<button
-						className="bg-black text-white p-2 rounded font-bold"
+						className="bg-gray-200  p-2 rounded font-bold"
 						onClick={prevPage}
 						disabled={page === 0}
 					>
 						Previous
 					</button>{" "}
-					<span className="bg-black text-white font-bold p-2 px-2 rounded">
+					<span className="bg-gray-200  font-bold p-2 px-2 rounded">
 						{page}
 					</span>
 					<button
-						className="bg-black text-white p-2 rounded font-bold"
+						className="bg-gray-200  p-2 rounded font-bold"
 						onClick={nextpage}
 						disabled={isPreviousData || !data?.hasMore}
 					>
