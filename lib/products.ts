@@ -1,4 +1,3 @@
-import axios from "axios";
 import products from "data/shoes.json";
 
 type ProductTypes = {

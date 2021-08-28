@@ -1,13 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import shoes from "data/shoes.json";
+import axios from "axios";
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.query.id) {
-		const { id } = req.query;
-		const foundProduct = shoes.find((element) => element.id === id);
-
-		return res.status(200).json(foundProduct);
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+	if (!req.query.page) {
+		return res.status(400).json({ message: "Page number is required" });
 	}
 
-	return res.status(200).json(shoes);
+	const { page } = req.query;
+	try {
+		const { data } = await axios.get(
+			`https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products?page=${page}&limit=10`
+		);
+		return res.status(200).json({ shoes: data, hasMore: Number(page) < 5 });
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
 };
