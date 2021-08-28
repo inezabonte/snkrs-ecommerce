@@ -1,17 +1,14 @@
-import Layout from "components/IndexLayout";
+import Layout from "@/components/IndexLayout";
 import Image from "next/image";
-import { getAllProducstIds, getSingleItem } from "lib/products";
-import { GetStaticPaths, GetStaticProps } from "next";
 import { useRadioGroup, Grid } from "@chakra-ui/react";
-import RadioCard from "components/RadioCard";
+import RadioCard from "@/components/RadioCard";
 import { useState, useContext } from "react";
-import { ParsedUrlQuery } from "querystring";
-import Header from "components/Header";
+import Header from "@/components/Header";
 import { CartDataContext } from "lib/CartDataProvider";
-
-interface IParams extends ParsedUrlQuery {
-	id: string;
-}
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import axios from "axios";
+import LoadingComponent from "@/components/LoadingComponent";
 
 type ItemTypes = {
 	createdAt: string;
@@ -20,24 +17,24 @@ type ItemTypes = {
 	price: string;
 	description: string;
 	id: string;
-	shoeSize?: string;
-	quantity?: string;
 };
 
-type ItemPagetypes = {
-	productData: ItemTypes;
-};
+export default function ItemPage() {
+	const router = useRouter();
+	const { id } = router.query;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	const paths = await getAllProducstIds();
-
-	return {
-		paths,
-		fallback: false,
+	const fetchProduct = async () => {
+		const { data } = await axios.get(
+			`https://611ed3bf9771bf001785c639.mockapi.io/api/v1/products/${id}`
+		);
+		return data;
 	};
-};
 
-export default function ItemPage({ productData }: ItemPagetypes) {
+	const { data, isLoading } = useQuery(
+		[id ? `products/${id}` : null],
+		fetchProduct
+	);
+
 	const [shoeSize, setShoeSize] = useState("");
 	const [cartQuantity, setCartQuantity] = useContext(CartDataContext);
 
@@ -68,7 +65,7 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 	const handleClick = async () => {
 		const items: string | null = localStorage.getItem("cart");
 
-		const addedItem = { ...productData, shoeSize, quantity: "1" };
+		const addedItem = { ...data, shoeSize, quantity: "1" };
 
 		if (items != null) {
 			const parsedDadata: ItemTypes[] = JSON.parse(items);
@@ -81,20 +78,24 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 		}
 	};
 
+	if (isLoading) {
+		return <LoadingComponent />;
+	}
+
 	return (
 		<Layout>
-			<Header title={productData.name} />
+			<Header title={data.name} />
 			<main className="min-h-screen m-4">
 				<div className="grid lg:grid-cols-2 justify-items-center items-center">
 					<div>
 						<figure>
-							<Image src={productData.imageUrl} width={457} height={514} />
+							<Image src={data.imageUrl} width={457} height={514} />
 						</figure>
 					</div>
 					<div className="max-w-sm text-center space-y-8">
-						<h2 className="font-medium text-2xl">{productData.name}</h2>
-						<span className="font-medium">${productData.price}</span>
-						<p>{productData.description}</p>
+						<h2 className="font-medium text-2xl">{data.name}</h2>
+						<span className="font-medium">${data.price}</span>
+						<p>{data.description}</p>
 
 						<Grid {...group} gridTemplateColumns="repeat(2, 1fr)">
 							{options.map((value) => {
@@ -118,14 +119,3 @@ export default function ItemPage({ productData }: ItemPagetypes) {
 		</Layout>
 	);
 }
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const { id } = params as IParams;
-	const productData = getSingleItem(id);
-
-	return {
-		props: {
-			productData,
-		},
-	};
-};
