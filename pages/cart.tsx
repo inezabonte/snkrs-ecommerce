@@ -14,6 +14,7 @@ type cartTypes = {
 	id: string;
 	shoeSize: string;
 	quantity: string;
+	timestamp: number;
 };
 
 export default function CartPage() {
@@ -56,10 +57,10 @@ export default function CartPage() {
 
 	const quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-	const removeItem = (id: string, quantity: string, price: string) => {
+	const removeItem = (id: number, quantity: string, price: string) => {
 		const removedAmount = parseInt(quantity) * parseInt(price);
 		setTotal(total - removedAmount);
-		const updatedCart = cart.filter((item) => item.id != id);
+		const updatedCart = cart.filter((item) => item.timestamp != id);
 		localStorage.setItem("cart", JSON.stringify(updatedCart));
 		setCart(updatedCart);
 		setCartQuantity(cartQuantity - 1);
@@ -105,7 +106,7 @@ export default function CartPage() {
 						</div>
 						<div>
 							{cart.map((item, index) => (
-								<div className="flex space-x-4" key={item.id}>
+								<div className="flex space-x-4" key={item.timestamp}>
 									<div>
 										<Image src={item.imageUrl} width={150} height={150} />
 									</div>
@@ -157,7 +158,11 @@ export default function CartPage() {
 												<button
 													className="border-b border-gray-600"
 													onClick={() =>
-														removeItem(item.id, item.quantity, item.price)
+														removeItem(
+															item.timestamp,
+															item.quantity,
+															item.price
+														)
 													}
 												>
 													Remove
