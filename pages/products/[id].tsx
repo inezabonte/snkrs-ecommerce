@@ -65,7 +65,12 @@ export default function ItemPage() {
 	const handleClick = async () => {
 		const items: string | null = localStorage.getItem("cart");
 
-		const addedItem = { ...data, shoeSize, quantity: "1" };
+		const addedItem = {
+			...data,
+			shoeSize,
+			quantity: "1",
+			timestamp: Date.now(),
+		};
 
 		if (items != null) {
 			const parsedDadata: ItemTypes[] = JSON.parse(items);
